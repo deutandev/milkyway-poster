@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Top Sights to See — The Milky Way</title>
+<style>
+  :root{
+    --bg:#0a0a14; --panel:#12101f; --text:#eaeef5; --muted:#9aa5b5; --line:#2a2f45;
+    --cyan:#22d3ee; --blue:#3b82f6; --pink:#ec4899; --orange:#f59e0b;
+    --yellow:#eab308; --red:#ef4444; --teal:#14b8a6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .sheet{
+    width:1000px;margin:0 auto;
+    background:linear-gradient(180deg,#0a0a14 0%,#0c0a1a 55%,#0a0a14 100%);
+    border:1px solid var(--line);border-radius:4px;padding:36px 40px;
+  }
+
+  .toolbar{
+    position:sticky;top:8px;z-index:50;width:1000px;margin:0 auto 18px;
+    display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;
+    background:#0d0d1a;border:1px solid var(--line);border-radius:10px;padding:8px 16px;
+  }
+  .toolbar button{background:rgba(34,211,238,.12);border:1px solid var(--cyan);color:var(--cyan);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+  .toolbar button:hover{background:rgba(34,211,238,.25)}
+  .toolbar .sep{color:var(--muted);font-size:12px}
+  .toolbar .seg .btn{opacity:.5}
+  .toolbar .seg .btn.active{opacity:1;background:var(--cyan);color:#04121a;border-color:var(--cyan)}
+
+  .kicker{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  h1.title{font-size:44px;font-weight:800;line-height:1.05;color:var(--text)}
+  .subtitle{color:var(--muted);font-size:16px;margin:8px 0 4px;max-width:720px}
+  .attribution{font-size:12px;color:#5b6673;letter-spacing:.5px}
+
+  .galaxy-hero{position:relative;margin-top:14px;overflow:hidden;border-radius:6px}
+  .galaxy-hero img{width:100%;display:block;height:230px;object-fit:cover}
+  .galaxy-hero .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(5,5,15,.35) 60%,rgba(5,5,15,.75) 100%)}
+  .hero-label{position:absolute;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#d8deec;text-shadow:0 0 6px #000acc}
+  .hero-label.l{left:22px;top:18px}.hero-label.r{right:22px;top:18px}
+  .hero-line{position:absolute;height:1px;background:var(--red);opacity:.7;top:26px;left:36px;right:36px}
+
+  .contents{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:10px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center}
+  .stat .dot{width:44px;height:44px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#fff;font-weight:700}
+  .stat b{display:block;font-size:18px;color:var(--text)}
+  .stat span{display:block;font-size:11.5px;color:var(--muted);line-height:1.15}
+
+  .sights{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+  .sight{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column}
+  .sight .num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700;margin-bottom:8px}
+  .sight h3{font-size:15.5px;line-height:1.2;color:var(--text);margin-bottom:8px}
+  .sight p{font-size:12px;line-height:1.45;color:var(--muted)}
+  .sight p+p{margin-top:6px}
+
+  .scale{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+  .scale .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--text);text-align:center}
+  .scale .step.here{background:rgba(236,72,153,.15);border-color:var(--pink);color:#fff}
+  .scale .step small{display:block;color:var(--muted);font-size:10px}
+  .scale .arr{color:var(--muted);font-size:15px}
+  .scale-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:6px}
+
+  /* language switching */
+  [data-en]{display:inline}
+  [data-id]{display:none}
+  html[data-lang="id"] [data-en]{display:none}
+  html[data-lang="id"] [data-id]{display:inline}
+  html[data-lang="id"] .sight p[data-en]{display:none}
+  html[data-lang="id"] .sight p[data-id]{display:block}
+
+  @media print{
+    .toolbar{display:none}
+    body{background:#fff}
+    .sheet{border:none;box-shadow:none;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="seg">
+    <button class="btn active" onclick="setLang('en')">EN</button>
+    <button class="btn" onclick="setLang('id')">ID</button>
+  </span>
+  <span class="sep">|</span>
+  <button onclick="downloadPNG()">&#8595; PNG</button>
+  <button onclick="window.print()">&#8595; PDF</button>
+</div>
+
+<div class="sheet" id="sheet">
+
+  <p class="kicker"> <span data-en>Milky Way travel guide</span><span data-id>Panduan Wisata Bima Sakti</span></p>
+  <h1 class="title"><span data-en>Top Sights to See</span><span data-id>Tempat-Tempat yang Wajib Dikunjungi</span></h1>
+  <p class="subtitle"><span data-en>If you want to travel our beautiful galaxy, you shouldn't miss out on these stunning places:</span><span data-id>Jika ingin menjelajahi galaksi kita yang indah, jangan lewatkan tempat-tempat menakjubkan ini:</span></p>
+  <p class="attribution">Kurzgesagt-style infographic &middot; Milky Way imagery: ESO/S. Brunier (CC BY 4.0) &middot; rebuilt by deutan.dev</p>
+
+  <div class="galaxy-hero">
+    <img src="assets/milkyway-hero-web.jpg" alt="Milky Way panorama"/>
+    <div class="overlay"></div>
+    <div class="hero-line"></div>
+    <span class="hero-label l"><span data-en>Perseus Arm</span><span data-id>Lengan Perseus</span></span>
+    <span class="hero-label r"><span data-en>Our Solar System</span><span data-id>Sistem Tata Surya Kita</span></span>
+  </div>
+
+  <div class="contents">
+    <div class="stat"><div class="dot" style="background:var(--orange)">&#10022;</div><b>~400 B</b><span data-en>Stars</span><span data-id>Bintang</span></div>
+    <div class="stat"><div class="dot" style="background:#d97706">&#9675;</div><b>~640 B</b><span data-en>Planets</span><span data-id>Planet</span></div>
+    <div class="stat"><div class="dot" style="background:#9fd8ff">&#8857;</div><b>~11.5 B</b><span data-en>White Dwarfs</span><span data-id>Kerdil Putih</span></div>
+    <div class="stat"><div class="dot" style="background:#7dd3fc">&#10022;</div><b>~1 B</b><span data-en>Neutron Stars</span><span data-id>Bintang Neutron</span></div>
+    <div class="stat"><div class="dot" style="background:#000;border:1px solid var(--line)">&#9715;</div><b>~30 M</b><span data-en>Black Holes</span><span data-id>Lubang Hitam</span></div>
+  </div>
+
+  <div class="sights">
+    <div class="sight" style="--accent:var(--cyan)">
+      <div class="num">1</div>
+      <h3><span data-en>The Skyline</span><span data-id>Garis Horizon</span></h3>
+      <p data-en>The Milky Way's skyline has amazing sights. The gravity of nearby galaxies pulls it into a gentle curve.</p>
+      <p data-en>Huge bubbles above and below the disk glow in gamma rays and X-rays — probably made by the supermassive black hole at the center.</p>
+      <p data-id>Garis horizon Bima Sakti menawarkan pemandangan menakjubkan. Gravitasi galaksi-galaksi di sekitarnya menariknya membentuk lengkungan yang halus.</p>
+      <p data-id>Gelembung-gelembung raksasa di atas dan di bawah piringan galaksi bersinar dalam sinar gamma dan sinar-X — kemungkinan besar terbentuk oleh lubang hitam supermasif di pusat galaksi.</p>
+    </div>
+
+    <div class="sight" style="--accent:var(--yellow)">
+      <div class="num">2</div>
+      <h3><span data-en>Nightlife Hotspots</span><span data-id>Pusat Kehidupan Malam</span></h3>
+      <p data-en>About one billion Earth-sized exoplanets could support life as we know it.</p>
+      <p data-en>Kepler-452b, 1,402 light-years away, sits in its star's habitable zone — a night out worth the trip.</p>
+      <p data-id>Sekitar satu miliar eksoplanet berukuran Bumi berpotensi mendukung kehidupan seperti yang kita kenal.</p>
+      <p data-id>Kepler-452b, berjarak 1.402 tahun cahaya, terletak di zona layak huni bintangnya — malam yang pantas diperjuangkan.</p>
+    </div>
+
+    <div class="sight" style="--accent:var(--pink)">
+      <div class="num">3</div>
+      <h3><span data-en>Industrial District</span><span data-id>Distrik Industri</span></h3>
+      <p data-en>Nebulae are stellar nurseries where new stars are born. Supernovae carve them into fantastic landscapes.</p>
+      <p data-en>The Pillars of Creation, in the Eagle Nebula, are a showstopper — enjoy the view.</p>
+      <p data-id>Nebula adalah tempat kelahiran bintang baru. Supernova membentuknya menjadi lanskap yang menakjubkan.</p>
+      <p data-id>Pilar Penciptaan di Nebula Elang adalah pemandangan yang tak terlupakan — nikmati panoramanya.</p>
+    </div>
+
+    <div class="sight" style="--accent:var(--red)">
+      <div class="num">4</div>
+      <h3><span data-en>The City Center</span><span data-id>Pusat Kota</span></h3>
+      <p data-en>In the middle sits Sagittarius A*, a supermassive black hole 4 million times the Sun's mass.</p>
+      <p data-en>Stars orbiting it at impossible speeds gave it away. A must-see.</p>
+      <p data-id>Di tengahnya terdapat Sagittarius A*, lubang hitam supermasif bermassa 4 juta kali massa Matahari.</p>
+      <p data-id>Bintang-bintang yang mengorbitnya pada kecepatan mustahil mengungkap keberadaannya. Tempat wajib dikunjungi.</p>
+    </div>
+
+    <div class="sight" style="--accent:var(--blue)">
+      <div class="num">5</div>
+      <h3><span data-en>Weekend Escapes</span><span data-id>Liburan Akhir Pekan</span></h3>
+      <p data-en>The globular cluster NGC 2419 — the "Intergalactic Wanderer" — orbits far out, past the Large Magellanic Cloud.</p>
+      <p data-en>Worth the day trip.</p>
+      <p data-id>Gugus bintang bulat NGC 2419 — sang "Perantau Antar Galaksi" — mengorbit sangat jauh, melewati Awan Magellan Besar.</p>
+      <p data-id>Lumayan dikunjungi dalam perjalanan sehari.</p>
+    </div>
+  </div>
+
+  <div class="scale">
+    <div class="step"><span data-en>Earth</span><span data-id>Bumi</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step"><span data-en>Solar System</span><span data-id>Sistem Tata Surya</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step"><span data-en>Closest Stars</span><span data-id>Bintang Terdekat</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step here"><span data-en>Milky Way &#9679; You are here</span><span data-id>Bima Sakti &#9679; Kau berada di sini</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step"><span data-en>Local Group</span><span data-id>Grup Lokal</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step"><span data-en>Local Supercluster</span><span data-id>Superklaster Lokal</span></div>
+    <span class="arr">&#8594;</span>
+    <div class="step"><span data-en>Universe</span><span data-id>Alam Semesta</span></div>
+  </div>
+  <p class="scale-note"><span data-en>* Rough estimates — most objects in the Milky Way are hard to observe and count.</span><span data-id>* Perkiraan kasar — sebagian besar objek di Bima Sakti sulit diamati dan dihitung.</span></p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+  function setLang(l){
+    document.documentElement.setAttribute('data-lang', l);
+    document.querySelectorAll('.toolbar .seg .btn').forEach(b=>b.classList.toggle('active', b.textContent.trim().toUpperCase()===l.toUpperCase()));
+  }
+  function downloadPNG(){
+    html2canvas(document.getElementById('sheet'),{backgroundColor:'#0a0a14',scale:2,useCORS:true}).then(function(c){
+      var a=document.createElement('a');
+      a.download='milkyway-poster.png';
+      a.href=c.toDataURL('image/png');
+      a.click();
+    });
+  }
+</script>
+</body>
+</html>
