@@ -1,197 +1,588 @@
 <!doctype html>
-<html lang="en" data-lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Top Sights to See — The Milky Way</title>
-<style>
-  :root{
-    --bg:#0a0a14; --panel:#12101f; --text:#eaeef5; --muted:#9aa5b5; --line:#2a2f45;
-    --cyan:#22d3ee; --blue:#3b82f6; --pink:#ec4899; --orange:#f59e0b;
-    --yellow:#eab308; --red:#ef4444; --teal:#14b8a6;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-
-  .sheet{
-    width:1000px;margin:0 auto;
-    background:linear-gradient(180deg,#0a0a14 0%,#0c0a1a 55%,#0a0a14 100%);
-    border:1px solid var(--line);border-radius:4px;padding:36px 40px;
-  }
-
-  .toolbar{
-    position:sticky;top:8px;z-index:50;width:1000px;margin:0 auto 18px;
-    display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;
-    background:#0d0d1a;border:1px solid var(--line);border-radius:10px;padding:8px 16px;
-  }
-  .toolbar button{background:rgba(34,211,238,.12);border:1px solid var(--cyan);color:var(--cyan);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
-  .toolbar button:hover{background:rgba(34,211,238,.25)}
-  .toolbar .sep{color:var(--muted);font-size:12px}
-  .toolbar .seg .btn{opacity:.5}
-  .toolbar .seg .btn.active{opacity:1;background:var(--cyan);color:#04121a;border-color:var(--cyan)}
-
-  .kicker{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  h1.title{font-size:44px;font-weight:800;line-height:1.05;color:var(--text)}
-  .subtitle{color:var(--muted);font-size:16px;margin:8px 0 4px;max-width:720px}
-  .attribution{font-size:12px;color:#5b6673;letter-spacing:.5px}
-
-  .galaxy-hero{position:relative;margin-top:14px;overflow:hidden;border-radius:6px}
-  .galaxy-hero img{width:100%;display:block;height:230px;object-fit:cover}
-  .galaxy-hero .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(5,5,15,.35) 60%,rgba(5,5,15,.75) 100%)}
-  .hero-label{position:absolute;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#d8deec;text-shadow:0 0 6px #000acc}
-  .hero-label.l{left:22px;top:18px}.hero-label.r{right:22px;top:18px}
-  .hero-line{position:absolute;height:1px;background:var(--red);opacity:.7;top:26px;left:36px;right:36px}
-
-  .contents{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:10px}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center}
-  .stat .dot{width:44px;height:44px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#fff;font-weight:700}
-  .stat b{display:block;font-size:18px;color:var(--text)}
-  .stat span{display:block;font-size:11.5px;color:var(--muted);line-height:1.15}
-
-  .sights{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
-  .sight{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column}
-  .sight .num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700;margin-bottom:8px}
-  .sight h3{font-size:15.5px;line-height:1.2;color:var(--text);margin-bottom:8px}
-  .sight p{font-size:12px;line-height:1.45;color:var(--muted)}
-  .sight p+p{margin-top:6px}
-
-  .scale{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:22px;flex-wrap:wrap}
-  .scale .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--text);text-align:center}
-  .scale .step.here{background:rgba(236,72,153,.15);border-color:var(--pink);color:#fff}
-  .scale .step small{display:block;color:var(--muted);font-size:10px}
-  .scale .arr{color:var(--muted);font-size:15px}
-  .scale-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:6px}
-
-  /* language switching */
-  [data-en]{display:inline}
-  [data-id]{display:none}
-  html[data-lang="id"] [data-en]{display:none}
-  html[data-lang="id"] [data-id]{display:inline}
-  html[data-lang="id"] .sight p[data-en]{display:none}
-  html[data-lang="id"] .sight p[data-id]{display:block}
-
-  @media print{
-    .toolbar{display:none}
-    body{background:#fff}
-    .sheet{border:none;box-shadow:none;width:100%}
-  }
-</style>
-</head>
-<body>
-
-<div class="toolbar">
-  <span class="seg">
-    <button class="btn active" onclick="setLang('en')">EN</button>
-    <button class="btn" onclick="setLang('id')">ID</button>
-  </span>
-  <span class="sep">|</span>
-  <button onclick="downloadPNG()">&#8595; PNG</button>
-  <button onclick="window.print()">&#8595; PDF</button>
-</div>
-
-<div class="sheet" id="sheet">
-
-  <p class="kicker"> <span data-en>Milky Way travel guide</span><span data-id>Panduan Wisata Bima Sakti</span></p>
-  <h1 class="title"><span data-en>Top Sights to See</span><span data-id>Tempat-Tempat yang Wajib Dikunjungi</span></h1>
-  <p class="subtitle"><span data-en>If you want to travel our beautiful galaxy, you shouldn't miss out on these stunning places:</span><span data-id>Jika ingin menjelajahi galaksi kita yang indah, jangan lewatkan tempat-tempat menakjubkan ini:</span></p>
-  <p class="attribution">Kurzgesagt-style infographic &middot; Milky Way imagery: ESO/S. Brunier (CC BY 4.0) &middot; rebuilt by deutan.dev</p>
-
-  <div class="galaxy-hero">
-    <img src="assets/milkyway-hero-web.jpg" alt="Milky Way panorama"/>
-    <div class="overlay"></div>
-    <div class="hero-line"></div>
-    <span class="hero-label l"><span data-en>Perseus Arm</span><span data-id>Lengan Perseus</span></span>
-    <span class="hero-label r"><span data-en>Our Solar System</span><span data-id>Sistem Tata Surya Kita</span></span>
-  </div>
-
-  <div class="contents">
-    <div class="stat"><div class="dot" style="background:var(--orange)">&#10022;</div><b>~400 B</b><span data-en>Stars</span><span data-id>Bintang</span></div>
-    <div class="stat"><div class="dot" style="background:#d97706">&#9675;</div><b>~640 B</b><span data-en>Planets</span><span data-id>Planet</span></div>
-    <div class="stat"><div class="dot" style="background:#9fd8ff">&#8857;</div><b>~11.5 B</b><span data-en>White Dwarfs</span><span data-id>Kerdil Putih</span></div>
-    <div class="stat"><div class="dot" style="background:#7dd3fc">&#10022;</div><b>~1 B</b><span data-en>Neutron Stars</span><span data-id>Bintang Neutron</span></div>
-    <div class="stat"><div class="dot" style="background:#000;border:1px solid var(--line)">&#9715;</div><b>~30 M</b><span data-en>Black Holes</span><span data-id>Lubang Hitam</span></div>
-  </div>
-
-  <div class="sights">
-    <div class="sight" style="--accent:var(--cyan)">
-      <div class="num">1</div>
-      <h3><span data-en>The Skyline</span><span data-id>Garis Horizon</span></h3>
-      <p data-en>The Milky Way's skyline has amazing sights. The gravity of nearby galaxies pulls it into a gentle curve.</p>
-      <p data-en>Huge bubbles above and below the disk glow in gamma rays and X-rays — probably made by the supermassive black hole at the center.</p>
-      <p data-id>Garis horizon Bima Sakti menawarkan pemandangan menakjubkan. Gravitasi galaksi-galaksi di sekitarnya menariknya membentuk lengkungan yang halus.</p>
-      <p data-id>Gelembung-gelembung raksasa di atas dan di bawah piringan galaksi bersinar dalam sinar gamma dan sinar-X — kemungkinan besar terbentuk oleh lubang hitam supermasif di pusat galaksi.</p>
-    </div>
-
-    <div class="sight" style="--accent:var(--yellow)">
-      <div class="num">2</div>
-      <h3><span data-en>Nightlife Hotspots</span><span data-id>Pusat Kehidupan Malam</span></h3>
-      <p data-en>About one billion Earth-sized exoplanets could support life as we know it.</p>
-      <p data-en>Kepler-452b, 1,402 light-years away, sits in its star's habitable zone — a night out worth the trip.</p>
-      <p data-id>Sekitar satu miliar eksoplanet berukuran Bumi berpotensi mendukung kehidupan seperti yang kita kenal.</p>
-      <p data-id>Kepler-452b, berjarak 1.402 tahun cahaya, terletak di zona layak huni bintangnya — malam yang pantas diperjuangkan.</p>
-    </div>
-
-    <div class="sight" style="--accent:var(--pink)">
-      <div class="num">3</div>
-      <h3><span data-en>Industrial District</span><span data-id>Distrik Industri</span></h3>
-      <p data-en>Nebulae are stellar nurseries where new stars are born. Supernovae carve them into fantastic landscapes.</p>
-      <p data-en>The Pillars of Creation, in the Eagle Nebula, are a showstopper — enjoy the view.</p>
-      <p data-id>Nebula adalah tempat kelahiran bintang baru. Supernova membentuknya menjadi lanskap yang menakjubkan.</p>
-      <p data-id>Pilar Penciptaan di Nebula Elang adalah pemandangan yang tak terlupakan — nikmati panoramanya.</p>
-    </div>
-
-    <div class="sight" style="--accent:var(--red)">
-      <div class="num">4</div>
-      <h3><span data-en>The City Center</span><span data-id>Pusat Kota</span></h3>
-      <p data-en>In the middle sits Sagittarius A*, a supermassive black hole 4 million times the Sun's mass.</p>
-      <p data-en>Stars orbiting it at impossible speeds gave it away. A must-see.</p>
-      <p data-id>Di tengahnya terdapat Sagittarius A*, lubang hitam supermasif bermassa 4 juta kali massa Matahari.</p>
-      <p data-id>Bintang-bintang yang mengorbitnya pada kecepatan mustahil mengungkap keberadaannya. Tempat wajib dikunjungi.</p>
-    </div>
-
-    <div class="sight" style="--accent:var(--blue)">
-      <div class="num">5</div>
-      <h3><span data-en>Weekend Escapes</span><span data-id>Liburan Akhir Pekan</span></h3>
-      <p data-en>The globular cluster NGC 2419 — the "Intergalactic Wanderer" — orbits far out, past the Large Magellanic Cloud.</p>
-      <p data-en>Worth the day trip.</p>
-      <p data-id>Gugus bintang bulat NGC 2419 — sang "Perantau Antar Galaksi" — mengorbit sangat jauh, melewati Awan Magellan Besar.</p>
-      <p data-id>Lumayan dikunjungi dalam perjalanan sehari.</p>
-    </div>
-  </div>
-
-  <div class="scale">
-    <div class="step"><span data-en>Earth</span><span data-id>Bumi</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step"><span data-en>Solar System</span><span data-id>Sistem Tata Surya</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step"><span data-en>Closest Stars</span><span data-id>Bintang Terdekat</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step here"><span data-en>Milky Way &#9679; You are here</span><span data-id>Bima Sakti &#9679; Kau berada di sini</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step"><span data-en>Local Group</span><span data-id>Grup Lokal</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step"><span data-en>Local Supercluster</span><span data-id>Superklaster Lokal</span></div>
-    <span class="arr">&#8594;</span>
-    <div class="step"><span data-en>Universe</span><span data-id>Alam Semesta</span></div>
-  </div>
-  <p class="scale-note"><span data-en>* Rough estimates — most objects in the Milky Way are hard to observe and count.</span><span data-id>* Perkiraan kasar — sebagian besar objek di Bima Sakti sulit diamati dan dihitung.</span></p>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script>
-  function setLang(l){
-    document.documentElement.setAttribute('data-lang', l);
-    document.querySelectorAll('.toolbar .seg .btn').forEach(b=>b.classList.toggle('active', b.textContent.trim().toUpperCase()===l.toUpperCase()));
-  }
-  function downloadPNG(){
-    html2canvas(document.getElementById('sheet'),{backgroundColor:'#0a0a14',scale:2,useCORS:true}).then(function(c){
-      var a=document.createElement('a');
-      a.download='milkyway-poster.png';
-      a.href=c.toDataURL('image/png');
-      a.click();
-    });
-  }
-</script>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="An illustrated guide to the Milky Way galaxy and its top sights."
+        />
+        <title>The Milky Way — Galactic Field Guide</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+            :root {
+                --ink: #f5f2f0;
+                --muted: #b7b4c0;
+                --night: #050611;
+                --panel: #0b0c1c;
+                --line: #282944;
+                --blue: #4e9dff;
+                --cyan: #62d9ed;
+                --gold: #f0a332;
+                --pink: #ff5577;
+                --violet: #7d62ff;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                background: radial-gradient(
+                    ellipse at 50% -10%,
+                    #18285c 0,
+                    #08091a 39%,
+                    #04050c 78%
+                );
+                color: var(--ink);
+                font-family: "DM Sans", system-ui, sans-serif;
+                line-height: 1.5;
+            }
+            body:before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                opacity: 0.35;
+                background-image:
+                    radial-gradient(#fff 1px, transparent 1px),
+                    radial-gradient(#7ddfff 1px, transparent 1px);
+                background-size:
+                    97px 97px,
+                    173px 173px;
+                background-position:
+                    12px 20px,
+                    60px 110px;
+                mask-image: linear-gradient(#000, transparent 75%);
+            }
+            .container {
+                width: min(1160px, calc(100% - 40px));
+                margin: auto;
+            }
+            .hero {
+                padding: 96px 0 68px;
+                display: grid;
+                grid-template-columns: 1.05fr 0.95fr;
+                gap: 54px;
+                align-items: center;
+            }
+            .eyebrow {
+                color: var(--pink);
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.14em;
+                font-size: 0.78rem;
+            }
+            .hero h1 {
+                font-family: "Space Grotesk";
+                font-size: clamp(3.5rem, 8vw, 7rem);
+                line-height: 0.9;
+                letter-spacing: -0.08em;
+                margin: 18px 0 28px;
+                max-width: 600px;
+            }
+            .hero h1 em {
+                font-style: normal;
+                color: #c5bfd0;
+            }
+            .lede {
+                font-size: 1.1rem;
+                color: #d4d1dc;
+                max-width: 540px;
+            }
+            .hero-art {
+                min-height: 390px;
+                position: relative;
+                border: 1px solid #303252;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle at center,
+                    #ef9e3550 0 7%,
+                    #326cd755 8% 10%,
+                    transparent 11% 22%,
+                    #2169c355 23% 25%,
+                    transparent 26% 38%,
+                    #40b9df44 39% 42%,
+                    transparent 43% 55%,
+                    #5f4dce55 56% 58%,
+                    transparent 59%
+                );
+                box-shadow:
+                    0 0 100px #3153bb33,
+                    inset 0 0 70px #0f173e;
+                overflow: hidden;
+            }
+            .hero-art:before,
+            .hero-art:after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                inset: 17%;
+                border: 14px solid #1a93e855;
+                transform: rotate(-20deg);
+            }
+            .hero-art:after {
+                inset: 30%;
+                border-color: #efab3c99;
+                border-width: 10px;
+                transform: rotate(35deg);
+            }
+            .sun {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 82px;
+                height: 82px;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                background: #ffbd50;
+                box-shadow:
+                    0 0 35px #ff9d38,
+                    0 0 80px #f07a2c88;
+            }
+            .orbit-dot {
+                position: absolute;
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 0 12px #9ceaff;
+            }
+            .d1 {
+                left: 20%;
+                top: 33%;
+            }
+            .d2 {
+                right: 19%;
+                top: 27%;
+                background: var(--pink);
+            }
+            .d3 {
+                left: 29%;
+                bottom: 22%;
+                background: var(--cyan);
+            }
+            .d4 {
+                right: 32%;
+                bottom: 17%;
+                background: var(--gold);
+            }
+            .section {
+                padding: 70px 0;
+            }
+            .section-head {
+                display: flex;
+                align-items: end;
+                justify-content: space-between;
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            .section h2 {
+                font-family: "Space Grotesk";
+                font-size: clamp(2rem, 4vw, 3.4rem);
+                line-height: 1;
+                margin: 0;
+                letter-spacing: -0.05em;
+            }
+            .section-kicker {
+                color: var(--muted);
+                max-width: 430px;
+            }
+            .contents {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 12px;
+            }
+            .content-card {
+                background: linear-gradient(145deg, #11132a, #080916);
+                border: 1px solid var(--line);
+                padding: 22px 16px;
+                border-radius: 18px;
+                min-height: 170px;
+            }
+            .content-card .symbol {
+                height: 45px;
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+            .content-card strong {
+                display: block;
+                color: var(--pink);
+                font-size: 1.35rem;
+                font-family: "Space Grotesk";
+            }
+            .content-card small {
+                color: var(--muted);
+            }
+            .label-strip {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin: 26px 0 0;
+            }
+            .pill {
+                border: 1px solid #343658;
+                border-radius: 99px;
+                padding: 8px 13px;
+                color: #d6d4e0;
+                background: #0d1022;
+            }
+            .pill:before {
+                content: "◈";
+                color: var(--cyan);
+                margin-right: 8px;
+            }
+            .sights {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 14px;
+            }
+            .sight {
+                position: relative;
+                padding: 24px 19px 22px;
+                border-top: 2px solid var(--pink);
+                background: #0a0b18cc;
+            }
+            .sight h3 {
+                font-family: "Space Grotesk";
+                font-size: 1.05rem;
+                margin: 0 0 12px;
+                color: #ff6681;
+            }
+            .sight h3 b {
+                display: inline-grid;
+                place-items: center;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background: var(--pink);
+                color: #210511;
+                font-size: 0.8rem;
+                margin-right: 6px;
+            }
+            .sight p {
+                color: #ccc9d5;
+                font-size: 0.91rem;
+                margin: 0;
+            }
+            .timeline {
+                margin-top: 35px;
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                position: relative;
+                gap: 8px;
+            }
+            .timeline:before {
+                content: "";
+                position: absolute;
+                top: 20px;
+                left: 4%;
+                right: 4%;
+                height: 2px;
+                background: #45496c;
+            }
+            .milestone {
+                text-align: center;
+                position: relative;
+            }
+            .milestone .planet {
+                margin: 0 auto 17px;
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle at 35% 30%,
+                    #bdefff,
+                    #2674cc 38%,
+                    #15214c 72%
+                );
+                border: 3px solid #6575be;
+                position: relative;
+                z-index: 1;
+            }
+            .milestone:nth-child(2) .planet {
+                background: #e78b37;
+            }
+            .milestone:nth-child(3) .planet {
+                background: #dbd8d1;
+            }
+            .milestone:nth-child(4) .planet {
+                background: #f6aa38;
+            }
+            .milestone:nth-child(5) .planet {
+                background: radial-gradient(
+                    #ffcb67 20%,
+                    #326ed2 23% 43%,
+                    #15214c 46%
+                );
+            }
+            .milestone:nth-child(6) .planet {
+                background: #a974e8;
+            }
+            .milestone:nth-child(7) .planet {
+                background: #3b3a6b;
+            }
+            .milestone span {
+                display: block;
+                color: var(--muted);
+                font-size: 0.78rem;
+            }
+            .milestone strong {
+                font-size: 0.82rem;
+            }
+            .caption {
+                color: #8f8da0;
+                font-size: 0.78rem;
+                margin: 12px 2px 0;
+            }
+            .footer {
+                padding: 50px 0 70px;
+                color: #78778b;
+                border-top: 1px solid #191a30;
+                font-size: 0.85rem;
+            }
+            @media (max-width: 850px) {
+                .hero {
+                    grid-template-columns: 1fr;
+                    padding-top: 65px;
+                }
+                .hero-art {
+                    min-height: 300px;
+                }
+                .contents,
+                .sights {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .timeline {
+                    grid-template-columns: repeat(4, 1fr);
+                    row-gap: 30px;
+                }
+                .timeline:before {
+                    display: none;
+                }
+            }
+            @media (max-width: 520px) {
+                .container {
+                    width: min(100% - 28px, 1160px);
+                }
+                .hero h1 {
+                    font-size: 4rem;
+                }
+                .contents,
+                .sights {
+                    grid-template-columns: 1fr;
+                }
+                .section {
+                    padding: 50px 0;
+                }
+                .poster {
+                    padding: 12px;
+                }
+                .timeline {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section class="hero container">
+                <div>
+                    <div class="eyebrow">A neighborhood study · 01</div>
+                    <h1>The<br /><em>Milky Way</em></h1>
+                    <p class="lede">
+                        Meet our home galaxy, the Milky Way! Its name describes
+                        the hazy band of light we can see in the night sky
+                        looking up from Earth. When we take a closer look, we
+                        find a barred spiral galaxy with a visible diameter of
+                        150,000 to 200,000 light-years, containing 100 to 400
+                        billion stars of all different kinds.
+                    </p>
+                </div>
+                <div
+                    class="hero-art"
+                    aria-label="Abstract illustration of the Milky Way"
+                >
+                    <i class="sun"></i><i class="orbit-dot d1"></i
+                    ><i class="orbit-dot d2"></i><i class="orbit-dot d3"></i
+                    ><i class="orbit-dot d4"></i>
+                </div>
+            </section>
+            <section id="contents" class="section container">
+                <div class="section-head">
+                    <div>
+                        <div class="eyebrow">Galactic contents</div>
+                        <h2>What is the Milky Way<br />actually made of?</h2>
+                    </div>
+                    <p class="section-kicker">
+                        Numbers are rough estimates — the scale of our galaxy is
+                        difficult to measure, and still full of surprises.
+                    </p>
+                </div>
+                <div class="contents">
+                    <div class="content-card">
+                        <div class="symbol">☀</div>
+                        <strong>~400 B</strong><small>Stars</small>
+                    </div>
+                    <div class="content-card">
+                        <div class="symbol">◉</div>
+                        <strong>~640 B</strong><small>Planets</small>
+                    </div>
+                    <div class="content-card">
+                        <div class="symbol">◌</div>
+                        <strong>~11.5 B</strong><small>White Dwarfs</small>
+                    </div>
+                    <div class="content-card">
+                        <div class="symbol">✦</div>
+                        <strong>~1 B</strong><small>Neutron Stars</small>
+                    </div>
+                    <div class="content-card">
+                        <div class="symbol">◉</div>
+                        <strong>~30 M</strong><small>Black Holes</small>
+                    </div>
+                </div>
+                <div class="label-strip">
+                    <span class="pill">Scutum–Centaurus Arm</span
+                    ><span class="pill">Carina–Sagittarius Arm</span
+                    ><span class="pill">Norma Arm</span
+                    ><span class="pill">Orion Spur</span
+                    ><span class="pill">Our Solar System</span
+                    ><span class="pill">Perseus Arm</span>
+                </div>
+            </section>
+            <section class="section container">
+                <div class="section-head">
+                    <div>
+                        <div class="eyebrow">You are here</div>
+                        <h2>From Earth to the universe</h2>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Earth</strong><span>our home</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Solar System</strong><span>~1 light-day</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Closest Stars</strong
+                        ><span>~10 light-years</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Milky Way</strong
+                        ><span>~200,000 light-years</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Local Group</strong
+                        ><span>~10 million light-years</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Laniakea Supercluster</strong
+                        ><span>~500 million light-years</span>
+                    </div>
+                    <div class="milestone">
+                        <div class="planet"></div>
+                        <strong>Universe</strong
+                        ><span>~90 billion light-years</span>
+                    </div>
+                </div>
+            </section>
+            <section id="sights" class="section container">
+                <div class="section-head">
+                    <div>
+                        <div class="eyebrow">A local itinerary</div>
+                        <h2>Top Sights to See</h2>
+                    </div>
+                    <p class="section-kicker">
+                        If you want to travel our beautiful galaxy, you
+                        shouldn’t miss out on these stunning places.
+                    </p>
+                </div>
+                <div class="sights">
+                    <article class="sight">
+                        <h3><b>1</b>The Skyline</h3>
+                        <p>
+                            The skyline of the Milky Way has some amazing sights
+                            to offer. The gravitational pull of the other
+                            galaxies around it causes its slight curve. The
+                            gigantic bubbles above and below the Milky Way can
+                            be seen in high-energy gamma rays and X-rays and are
+                            probably caused by the Supermassive Black Hole in
+                            the center of the galaxy.
+                        </p>
+                    </article>
+                    <article class="sight">
+                        <h3><b>2</b>Possible Nightlife Hotspots</h3>
+                        <p>
+                            All over the Milky Way, there are an estimated
+                            number of about one billion Earth-sized exoplanets
+                            with properties that could potentially sustain life
+                            as we know it. One of the most interesting
+                            exoplanets is Kepler-452b – a total of 1,402
+                            light-years away. It has the perfect distance to its
+                            star, making it not too hot and not too cold. One
+                            orbit around its star takes 385 days, only a tiny
+                            bit longer than Earth needs to travel around the Sun
+                            – ideal for a night out!
+                        </p>
+                    </article>
+                    <article class="sight">
+                        <h3><b>3</b>Industrial District</h3>
+                        <p>
+                            Nebulae are huge clouds of dust and gas that act as
+                            galactic nurseries: new stars are constantly born
+                            here. When some of these hot young stars explode in
+                            supernovae, they release stellar winds and
+                            ultraviolet radiation, forming the clouds into
+                            fantastic landscapes. One pretty example is called
+                            the Pillars of Creation, a part of the Eagle Nebula.
+                            In 2007 NASA reported that the cloud had been
+                            destroyed by a supernova – luckily this turned out
+                            to be wrong and you can still enjoy the view of this
+                            showstopper.
+                        </p>
+                    </article>
+                    <article class="sight">
+                        <h3><b>4</b>The City Center</h3>
+                        <p>
+                            Right in the middle of the Milky Way sits
+                            Sagittarius A*, our galaxy’s central Supermassive
+                            Black Hole, estimated to be four million times
+                            heavier than our Sun. For something so massive, it
+                            is pretty good at hiding. But the fact that some
+                            stars were orbiting unusually fast around what
+                            appeared to be nothing gave it away once and for
+                            all. A must-see!
+                        </p>
+                    </article>
+                    <article class="sight">
+                        <h3><b>5</b>Weekend Escapes</h3>
+                        <p>
+                            Many star clusters are located around the halo of
+                            the Milky Way. We recommend visiting the globular
+                            cluster NGC 2419. It is also called the
+                            Intergalactic Wanderer because with its
+                            three-billion-year orbit it travels further out than
+                            the Milky Way’s neighbor galaxy, the Large
+                            Magellanic Cloud. This is where it currently
+                            resides. So right now it is located pretty far away
+                            from the center of the Milky Way. But it is
+                            definitely worth a day trip!
+                        </p>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="container">THE MILKY WAY · A GALACTIC FIELD GUIDE</div>
+        </footer>
+    </body>
 </html>
