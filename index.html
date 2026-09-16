@@ -87,11 +87,11 @@
                 color: #d4d1dc;
                 max-width: 540px;
             }
-            .hero-image {
+            .contents-image {
                 display: block;
                 width: 100%;
                 height: auto;
-                margin: 34px 0 30px;
+                margin: 24px 0;
                 border: 1px solid #303252;
                 border-radius: 18px;
             }
@@ -147,6 +147,13 @@
                 flex-wrap: wrap;
                 gap: 10px;
                 margin: 26px 0 0;
+            }
+            .arms-description {
+                color: #d4d1dc;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 28px 0 0;
+                max-width: 720px;
             }
             .pill {
                 border: 1px solid #343658;
@@ -314,11 +321,6 @@
             <section class="hero container">
                 <div>
                     <h1>The <em>Milky Way</em></h1>
-                    <img
-                        class="hero-image"
-                        src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/ssc2008-10b1.jpg?w=5600&h=5600&fit=clip&crop=faces%2Cfocalpoint"
-                        alt="The Sun"
-                    />
                     <p class="lede">
                         Meet our home galaxy, the Milky Way! Its name describes
                         the hazy band of light we can see in the night sky
@@ -362,6 +364,11 @@
                         <strong>~30 M</strong><small>Black Holes</small>
                     </div>
                 </div>
+                <img
+                    class="contents-image"
+                    src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/ssc2008-10b1.jpg?w=5600&h=5600&fit=clip&crop=faces%2Cfocalpoint"
+                    alt="Milky Way galaxy"
+                />
                 <div class="label-strip">
                     <span class="pill">Scutum–Centaurus Arm</span
                     ><span class="pill">Carina–Sagittarius Arm</span
@@ -370,6 +377,19 @@
                     ><span class="pill">Our Solar System</span
                     ><span class="pill">Perseus Arm</span>
                 </div>
+                <p class="arms-description">
+                    Like early explorers mapping the continents of our globe, astronomers are busy
+                    charting the spiral structure of our galaxy. Using infrared images from NASA's
+                    Spitzer Space Telescope, scientists discovered that the Milky Way's elegant
+                    spiral structure is dominated by just two major arms—Scutum–Centaurus and
+                    Perseus—wrapping off the ends of a central bar of stars. Previously, our galaxy
+                    was thought to possess four major arms. The two now-demoted minor arms
+                    (Norma and Sagittarius) are less distinct and located between the major arms.
+                    The major arms consist of the highest densities of both young and old stars,
+                    while the minor arms are primarily filled with gas and pockets of star-forming
+                    activity. Our Sun lies near a small, partial arm called the Orion Arm, or Orion
+                    Spur, located between the Sagittarius and Perseus arms.
+                </p>
             </section>
             <section class="section container">
                 <div class="section-head">
