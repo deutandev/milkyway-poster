@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -382,8 +382,8 @@
     </head>
     <body>
         <div class="language-toggle" aria-label="Language selector">
-            <button type="button" class="active" data-lang="en">EN</button>
-            <button type="button" data-lang="id">ID</button>
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" class="active" data-lang="id">ID</button>
         </div>
         <main>
             <section class="hero container">
@@ -593,7 +593,7 @@
         </main>
         <footer class="footer">
             <div class="container">
-                <h2>Sources and image credits</h2>
+                <h2 class="sources-title">Sources and image credits</h2>
                 <ul class="sources">
                     <li><a href="https://science.nasa.gov/resource/the-milky-way-galaxy/" target="_blank" rel="noreferrer">NASA — Milky Way galaxy illustration</a></li>
                     <li><a href="https://science.nasa.gov/asset/webb/our-galaxy/" target="_blank" rel="noreferrer">NASA / Webb — central bulge and disk</a></li>
@@ -660,12 +660,13 @@
                     "Approximate physical extent at each scale. For the Solar System, the boundary is the heliosphere—the bubble shaped by the Sun’s wind.",
                     "Perkiraan ukuran fisik pada setiap skala. Untuk Tata Surya, batasnya adalah heliosfer—gelembung yang dibentuk oleh angin Matahari."
                 ],
-                ".sights-eyebrow": ["Regions of interest", "Rencana perjalanan lokal"],
-                ".sights-title": ["Five features of the Milky Way", "Tempat-Tempat Terbaik untuk Dikunjungi"],
+                ".sights-eyebrow": ["Regions of interest", "Anatomi Bima Sakti"],
+                ".sights-title": ["Five features of the Milky Way", "Lima struktur utama Bima Sakti"],
                 ".sights-kicker": [
                     "From the central black hole to the outer halo, each region reveals a different part of how our galaxy works.",
-                    "Jika ingin menjelajahi galaksi kita yang indah, jangan lewatkan tempat-tempat menakjubkan ini."
+                    "Dari lubang hitam pusat hingga halo terluar, setiap bagian memperlihatkan cara galaksi kita tersusun dan berevolusi."
                 ],
+                ".sources-title": ["Sources and image credits", "Sumber dan kredit gambar"],
                 ".sight:nth-child(1) h3": ["<b>1</b>Galactic center and bulge", "<b>1</b>Pusat dan tonjolan galaksi"],
                 ".sight:nth-child(2) h3": ["<b>2</b>Central supermassive black hole", "<b>2</b>Lubang hitam supermasif pusat"],
                 ".sight:nth-child(3) h3": ["<b>3</b>Spiral arms", "<b>3</b>Lengan spiral"],
@@ -703,7 +704,7 @@
                 languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === language));
             };
             languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
-            setLanguage("en");
+            setLanguage("id");
         </script>
     </body>
 </html>
