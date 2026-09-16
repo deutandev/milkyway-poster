@@ -386,7 +386,61 @@
                     grid-template-columns: repeat(2, 1fr);
                 }
             }
-        </style>
+            .print-link {
+                margin: 18px 0 0;
+            }
+            .print-link a {
+                color: var(--ink);
+                text-underline-offset: 3px;
+            }
+            @media print {
+                @page {
+                    size: A4;
+                    margin: 12mm;
+                }
+                *,
+                *::before,
+                *::after {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                body {
+                    background: #080f20;
+                }
+                .language-toggle {
+                    display: none;
+                }
+                .hero {
+                    padding: 20px 0 30px;
+                }
+                .section {
+                    padding: 28px 0;
+                    break-inside: avoid;
+                }
+                .section-head {
+                    break-after: avoid;
+                }
+                .contents,
+                .sights {
+                    grid-template-columns: repeat(5, 1fr);
+                }
+                .print-link {
+                    display: none;
+                }
+                .content-card,
+                .sight,
+                .milestone {
+                    break-inside: avoid;
+                }
+                .sight-image {
+                    height: auto;
+                    aspect-ratio: 1 / 1;
+                }
+                .footer {
+                    padding: 28px 0;
+                }
+            }
+         </style>
     </head>
     <body>
         <div class="language-toggle" aria-label="Language selector">
@@ -615,6 +669,7 @@
                     <li><a href="https://science.nasa.gov/mission/hubble/science/science-highlights/monster-black-holes-are-everywhere/" target="_blank" rel="noreferrer">NASA / Hubble — black-hole estimate</a></li>
                     <li><a href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noreferrer">NASA glossary — Sagittarius A* mass</a></li>
                 </ul>
+                <p class="print-link"><a href="#print" id="print-page">Export this page as PDF</a></p>
             </div>
         </footer>
         <script>
@@ -712,6 +767,7 @@
                 languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === language));
             };
             languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
+            document.querySelector("#print-page").addEventListener("click", (event) => { event.preventDefault(); window.print(); });
             setLanguage("id");
         </script>
     </body>
