@@ -11,16 +11,16 @@
         <style>
             @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
             :root {
-                --ink: #f5f2f0;
-                --muted: #b7b4c0;
-                --night: #050611;
-                --panel: #0b0c1c;
-                --line: #282944;
-                --blue: #4e9dff;
-                --cyan: #62d9ed;
-                --gold: #f0a332;
-                --pink: #ff5577;
-                --violet: #7d62ff;
+                --ink: #fff7cf;
+                --muted: #b7bdc9;
+                --night: #1b2945;
+                --panel: #101a31;
+                --line: #3a4964;
+                --blue: #8db8d4;
+                --cyan: #b8e7f2;
+                --gold: #ffe9a0;
+                --pink: #ffe9a0;
+                --violet: #9aaed0;
             }
             * {
                 box-sizing: border-box;
@@ -32,9 +32,9 @@
                 margin: 0;
                 background: radial-gradient(
                     ellipse at 50% -10%,
-                    #18285c 0,
-                    #08091a 39%,
-                    #04050c 78%
+                    #263653 0,
+                    #101a31 39%,
+                    #080f20 78%
                 );
                 color: var(--ink);
                 font-family: "DM Sans", system-ui, sans-serif;
@@ -60,6 +60,36 @@
             .container {
                 width: min(1160px, calc(100% - 40px));
                 margin: auto;
+            }
+            .language-toggle {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 20;
+                display: flex;
+                gap: 4px;
+                padding: 4px;
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: #08091ad9;
+                backdrop-filter: blur(12px);
+            }
+            .language-toggle button {
+                border: 0;
+                border-radius: 999px;
+                padding: 6px 10px;
+                color: var(--muted);
+                background: transparent;
+                font: 600 0.75rem "DM Sans", sans-serif;
+                cursor: pointer;
+            }
+            .language-toggle button.active {
+                color: var(--night);
+                background: var(--pink);
+            }
+            .language-toggle button:focus-visible {
+                outline: 2px solid var(--cyan);
+                outline-offset: 2px;
             }
             .hero {
                 padding: 96px 0 68px;
@@ -178,11 +208,25 @@
                 border-top: 2px solid var(--pink);
                 background: #0a0b18cc;
             }
+            .sight-image {
+                display: block;
+                width: calc(100% + 38px);
+                height: 138px;
+                margin: -24px -19px 20px;
+                object-fit: cover;
+                object-position: center;
+                border-bottom: 1px solid var(--line);
+                filter: saturate(0.9) contrast(1.05);
+            }
+            .sight:nth-child(1) .sight-image,
+            .sight:nth-child(4) .sight-image {
+                object-position: top;
+            }
             .sight h3 {
                 font-family: "Space Grotesk";
                 font-size: 1.05rem;
                 margin: 0 0 12px;
-                color: #ff6681;
+                color: #ffe9a0;
             }
             .sight h3 b {
                 display: inline-grid;
@@ -203,7 +247,7 @@
             .timeline {
                 margin-top: 35px;
                 display: grid;
-                grid-template-columns: repeat(7, 1fr);
+                grid-template-columns: repeat(6, 1fr);
                 position: relative;
                 gap: 8px;
             }
@@ -236,26 +280,23 @@
                 z-index: 1;
             }
             .milestone:nth-child(2) .planet {
-                background: #e78b37;
+                background: #d8b86a;
             }
             .milestone:nth-child(3) .planet {
                 background: #dbd8d1;
             }
             .milestone:nth-child(4) .planet {
-                background: #f6aa38;
+                background: #ffe9a0;
             }
             .milestone:nth-child(5) .planet {
                 background: radial-gradient(
-                    #ffcb67 20%,
+                    #fff1b3 20%,
                     #326ed2 23% 43%,
                     #15214c 46%
                 );
             }
             .milestone:nth-child(6) .planet {
                 background: #a974e8;
-            }
-            .milestone:nth-child(7) .planet {
-                background: #3b3a6b;
             }
             .milestone span {
                 display: block;
@@ -275,6 +316,29 @@
                 color: #78778b;
                 border-top: 1px solid #191a30;
                 font-size: 0.85rem;
+            }
+            .footer h2 {
+                color: var(--ink);
+                font-family: "Space Grotesk";
+                font-size: 1.25rem;
+                margin: 0 0 14px;
+            }
+            .sources {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px 24px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            .sources a {
+                color: var(--muted);
+                text-decoration-color: #65738e;
+                text-underline-offset: 3px;
+            }
+            .sources a:hover,
+            .sources a:focus-visible {
+                color: var(--ink);
             }
             @media (max-width: 850px) {
                 .hero {
@@ -317,43 +381,46 @@
         </style>
     </head>
     <body>
+        <div class="language-toggle" aria-label="Language selector">
+            <button type="button" class="active" data-lang="en">EN</button>
+            <button type="button" data-lang="id">ID</button>
+        </div>
         <main>
             <section class="hero container">
                 <div>
-                    <h1>The <em>Milky Way</em></h1>
+                    <h1 id="hero-title">Inside the <em>Milky Way</em></h1>
                     <p class="lede">
-                        Meet our home galaxy, the Milky Way! Its name describes
-                        the hazy band of light we can see in the night sky
-                        looking up from Earth. When we take a closer look, we
-                        find a barred spiral galaxy with a visible diameter of
-                        150,000 to 200,000 light-years, containing 100 to 400
-                        billion stars of all different kinds.
+                        The Milky Way is a barred spiral galaxy: a broad disk of
+                        stars, gas, and dust surrounding a dense central bulge.
+                        It spans roughly 100,000 light-years and contains
+                        hundreds of billions of stars, including our Sun.
                     </p>
                 </div>
             </section>
             <section id="contents" class="section container">
                 <div class="section-head">
                     <div>
-                        <div class="eyebrow">Galactic contents</div>
-                        <h2>What is the Milky Way<br />actually made of?</h2>
+                        <div class="eyebrow contents-eyebrow">Galactic inventory</div>
+                        <h2 class="contents-title">What fills<br />our galaxy?</h2>
                     </div>
-                    <p class="section-kicker">
-                        Numbers are rough estimates — the scale of our galaxy is
-                        difficult to measure, and still full of surprises.
+                    <p class="section-kicker contents-kicker">
+                        These are evidence-based estimates, not a census. Most
+                        entries are population counts; the white-dwarf figure is
+                        a sample of 70 detected in one Hubble bulge field.
                     </p>
                 </div>
                 <div class="contents">
                     <div class="content-card">
                         <div class="symbol">☀</div>
-                        <strong>~400 B</strong><small>Stars</small>
+                        <strong>100–400 B</strong><small>Stars</small>
                     </div>
                     <div class="content-card">
                         <div class="symbol">◉</div>
-                        <strong>~640 B</strong><small>Planets</small>
+                        <strong>≥100 B</strong><small>Planets</small>
                     </div>
                     <div class="content-card">
                         <div class="symbol">◌</div>
-                        <strong>~11.5 B</strong><small>White Dwarfs</small>
+                        <strong>70</strong><small>in one Hubble field</small>
                     </div>
                     <div class="content-card">
                         <div class="symbol">✦</div>
@@ -361,12 +428,12 @@
                     </div>
                     <div class="content-card">
                         <div class="symbol">◉</div>
-                        <strong>~30 M</strong><small>Black Holes</small>
+                        <strong>~100 M</strong><small>Black Holes</small>
                     </div>
                 </div>
                 <img
                     class="contents-image"
-                    src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/ssc2008-10b1.jpg?w=5600&h=5600&fit=clip&crop=faces%2Cfocalpoint"
+                    src="assets/milky-way-galaxy.jpg"
                     alt="Milky Way galaxy"
                 />
                 <div class="label-strip">
@@ -394,131 +461,244 @@
             <section class="section container">
                 <div class="section-head">
                     <div>
-                        <div class="eyebrow">You are here</div>
-                        <h2>From Earth to the universe</h2>
+                        <div class="eyebrow timeline-eyebrow">Scale and structure</div>
+                        <h2 class="timeline-title">Our place in the cosmic scale</h2>
                     </div>
                 </div>
                 <div class="timeline">
                     <div class="milestone">
                         <div class="planet"></div>
-                        <strong>Earth</strong><span>our home</span>
+                        <strong>Earth</strong><span>diameter: 12,742 km</span>
                     </div>
                     <div class="milestone">
                         <div class="planet"></div>
-                        <strong>Solar System</strong><span>~1 light-day</span>
-                    </div>
-                    <div class="milestone">
-                        <div class="planet"></div>
-                        <strong>Closest Stars</strong
-                        ><span>~10 light-years</span>
+                        <strong>Solar System</strong><span>diameter: ~240 AU</span>
                     </div>
                     <div class="milestone">
                         <div class="planet"></div>
                         <strong>Milky Way</strong
-                        ><span>~200,000 light-years</span>
+                        ><span>diameter: ~100,000 light-years</span>
                     </div>
                     <div class="milestone">
                         <div class="planet"></div>
                         <strong>Local Group</strong
-                        ><span>~10 million light-years</span>
+                        ><span>diameter: ~10 million light-years</span>
                     </div>
                     <div class="milestone">
                         <div class="planet"></div>
                         <strong>Laniakea Supercluster</strong
-                        ><span>~500 million light-years</span>
+                        ><span>diameter: ~520 million light-years</span>
                     </div>
                     <div class="milestone">
                         <div class="planet"></div>
-                        <strong>Universe</strong
-                        ><span>~90 billion light-years</span>
+                        <strong>Observable Universe</strong
+                        ><span>diameter: ~93 billion light-years</span>
                     </div>
                 </div>
+                <p class="caption timeline-caption">
+                    Approximate physical extent at each scale. For the Solar
+                    System, the boundary is the heliosphere—the bubble shaped by
+                    the Sun’s wind.
+                </p>
             </section>
             <section id="sights" class="section container">
                 <div class="section-head">
                     <div>
-                        <div class="eyebrow">A local itinerary</div>
-                        <h2>Top Sights to See</h2>
+                        <div class="eyebrow sights-eyebrow">Regions of interest</div>
+                        <h2 class="sights-title">Five features of the Milky Way</h2>
                     </div>
-                    <p class="section-kicker">
-                        If you want to travel our beautiful galaxy, you
-                        shouldn’t miss out on these stunning places.
+                    <p class="section-kicker sights-kicker">
+                        From the central black hole to the outer halo, each region
+                        reveals a different part of how our galaxy works.
                     </p>
                 </div>
                 <div class="sights">
                     <article class="sight">
-                        <h3><b>1</b>The Skyline</h3>
+                        <img
+                            class="sight-image"
+                            src="assets/galactic-center.png"
+                            alt="Illustration of the Milky Way’s central bulge and disk"
+                            loading="lazy"
+                        />
+                        <h3><b>1</b>Galactic center and bulge</h3>
                         <p>
-                            The skyline of the Milky Way has some amazing sights
-                            to offer. The gravitational pull of the other
-                            galaxies around it causes its slight curve. The
-                            gigantic bubbles above and below the Milky Way can
-                            be seen in high-energy gamma rays and X-rays and are
-                            probably caused by the Supermassive Black Hole in
-                            the center of the galaxy.
+                            The central bulge is a dense, roughly spherical region
+                            of older stars surrounding the Milky Way’s nucleus.
+                            Its stars move through a crowded environment unlike
+                            the quieter outer disk.
                         </p>
                     </article>
                     <article class="sight">
-                        <h3><b>2</b>Possible Nightlife Hotspots</h3>
+                        <img
+                            class="sight-image"
+                            src="assets/sagittarius-a.png"
+                            alt="Event Horizon Telescope image of Sagittarius A*"
+                            loading="lazy"
+                        />
+                        <h3><b>2</b>Central supermassive black hole</h3>
                         <p>
-                            All over the Milky Way, there are an estimated
-                            number of about one billion Earth-sized exoplanets
-                            with properties that could potentially sustain life
-                            as we know it. One of the most interesting
-                            exoplanets is Kepler-452b – a total of 1,402
-                            light-years away. It has the perfect distance to its
-                            star, making it not too hot and not too cold. One
-                            orbit around its star takes 385 days, only a tiny
-                            bit longer than Earth needs to travel around the Sun
-                            – ideal for a night out!
+                            Sagittarius A* sits at the exact center of the galaxy.
+                            It has a mass of about four million Suns. It is dark
+                            itself, but its gravity controls the orbits of nearby
+                            stars and gas.
                         </p>
                     </article>
                     <article class="sight">
-                        <h3><b>3</b>Industrial District</h3>
+                        <img
+                            class="sight-image"
+                            src="assets/spiral-arms.jpg"
+                            alt="Annotated illustration of the Milky Way’s spiral arms"
+                            loading="lazy"
+                        />
+                        <h3><b>3</b>Spiral arms</h3>
                         <p>
-                            Nebulae are huge clouds of dust and gas that act as
-                            galactic nurseries: new stars are constantly born
-                            here. When some of these hot young stars explode in
-                            supernovae, they release stellar winds and
-                            ultraviolet radiation, forming the clouds into
-                            fantastic landscapes. One pretty example is called
-                            the Pillars of Creation, a part of the Eagle Nebula.
-                            In 2007 NASA reported that the cloud had been
-                            destroyed by a supernova – luckily this turned out
-                            to be wrong and you can still enjoy the view of this
-                            showstopper.
+                            Spiral arms are dense regions moving through the disk,
+                            not rigid structures. Their gravity compresses gas and
+                            helps trigger new generations of stars. The Sun sits
+                            in the smaller Orion Spur between major arms.
                         </p>
                     </article>
                     <article class="sight">
-                        <h3><b>4</b>The City Center</h3>
+                        <img
+                            class="sight-image"
+                            src="assets/eagle-nebula.jpg"
+                            alt="Hubble image of the Eagle Nebula’s gas and dust"
+                            loading="lazy"
+                        />
+                        <h3><b>4</b>Star-forming nebulae</h3>
                         <p>
-                            Right in the middle of the Milky Way sits
-                            Sagittarius A*, our galaxy’s central Supermassive
-                            Black Hole, estimated to be four million times
-                            heavier than our Sun. For something so massive, it
-                            is pretty good at hiding. But the fact that some
-                            stars were orbiting unusually fast around what
-                            appeared to be nothing gave it away once and for
-                            all. A must-see!
+                            Cold clouds of gas and dust collapse into stars inside
+                            nebulae. Radiation and stellar winds from young stars
+                            sculpt the clouds, while supernovae return enriched
+                            material to the surrounding space.
                         </p>
                     </article>
                     <article class="sight">
-                        <h3><b>5</b>Weekend Escapes</h3>
+                        <img
+                            class="sight-image"
+                            src="assets/globular-clusters.jpg"
+                            alt="Illustration of the Milky Way’s halo and globular clusters"
+                            loading="lazy"
+                        />
+                        <h3><b>5</b>Halo and globular clusters</h3>
                         <p>
-                            Many star clusters are located around the halo of
-                            the Milky Way. We recommend visiting the globular
-                            cluster NGC 2419. It is also called the
-                            Intergalactic Wanderer because with its
-                            three-billion-year orbit it travels further out than
-                            the Milky Way’s neighbor galaxy, the Large
-                            Magellanic Cloud. This is where it currently
-                            resides. So right now it is located pretty far away
-                            from the center of the Milky Way. But it is
-                            definitely worth a day trip!
+                            A faint halo surrounds the bright disk. It contains
+                            ancient stars and tightly packed globular clusters
+                            orbiting far above and below the galaxy’s main plane.
+                            These populations preserve clues about the Milky Way’s
+                            early history.
                         </p>
                     </article>
                 </div>
             </section>
         </main>
+        <footer class="footer">
+            <div class="container">
+                <h2>Sources and image credits</h2>
+                <ul class="sources">
+                    <li><a href="https://science.nasa.gov/resource/the-milky-way-galaxy/" target="_blank" rel="noreferrer">NASA — Milky Way galaxy illustration</a></li>
+                    <li><a href="https://science.nasa.gov/asset/webb/our-galaxy/" target="_blank" rel="noreferrer">NASA / Webb — central bulge and disk</a></li>
+                    <li><a href="https://eventhorizontelescope.org/sites/g/files/omnuum3116/files/eht/files/avgimage_afmhot_us_edit.png" target="_blank" rel="noreferrer">Event Horizon Telescope — Sagittarius A*</a></li>
+                    <li><a href="https://science.nasa.gov/asset/hubble/the-eagle-has-risen-stellar-spire-in-the-eagle-nebula/" target="_blank" rel="noreferrer">NASA / Hubble — Eagle Nebula</a></li>
+                    <li><a href="https://science.nasa.gov/asset/hubble/globular-clusters-around-milky-way/" target="_blank" rel="noreferrer">NASA / Hubble — globular clusters</a></li>
+                    <li><a href="https://science.nasa.gov/universe/exoplanets/our-milky-way-galaxy-how-big-is-space/" target="_blank" rel="noreferrer">NASA — stars and galaxy scale</a></li>
+                    <li><a href="https://science.nasa.gov/missions/hubble/the-milky-way-contains-at-least-100-billion-planets-according-to-survey/" target="_blank" rel="noreferrer">NASA / Hubble — minimum planet estimate</a></li>
+                    <li><a href="https://science.nasa.gov/missions/hubble/hubble-uncovers-fading-cinders-of-some-of-our-galaxys-earliest-homesteaders/" target="_blank" rel="noreferrer">NASA / Hubble — white dwarfs</a></li>
+                    <li><a href="https://imagine.gsfc.nasa.gov/observatories/learning/fermi/multimedia/docs/fermi_science_writers_guide.pdf" target="_blank" rel="noreferrer">NASA Fermi — neutron-star estimate</a></li>
+                    <li><a href="https://science.nasa.gov/mission/hubble/science/science-highlights/monster-black-holes-are-everywhere/" target="_blank" rel="noreferrer">NASA / Hubble — black-hole estimate</a></li>
+                </ul>
+            </div>
+        </footer>
+        <script>
+            const copy = {
+                "#hero-title": ["Inside the <em>Milky Way</em>", "<em>Bima Sakti</em>"],
+                ".lede": [
+                    "The Milky Way is a barred spiral galaxy: a broad disk of stars, gas, and dust surrounding a dense central bulge. It spans roughly 100,000 light-years and contains hundreds of billions of stars, including our Sun.",
+                    "Kenali galaksi tempat tinggal kita, Bima Sakti! Namanya menggambarkan pita cahaya samar yang terlihat di langit malam saat kita memandang dari Bumi. Jika diamati lebih dekat, Bima Sakti adalah galaksi spiral berbatang dengan diameter 150.000 hingga 200.000 tahun cahaya, yang berisi 100 hingga 400 miliar bintang dengan berbagai jenis."
+                ],
+                ".contents-eyebrow": ["Galactic inventory", "Isi galaksi"],
+                ".contents-title": ["What fills<br />our galaxy?", "Sebenarnya, Bima Sakti<br />terbuat dari apa?"],
+                ".contents-kicker": [
+                    "These are evidence-based estimates, not a census. Most entries are population counts; the white-dwarf figure is a sample of 70 detected in one Hubble bulge field.",
+                    "Ini adalah perkiraan berbasis bukti, bukan sensus. Sebagian besar menunjukkan jumlah populasi; angka katai putih adalah sampel 70 objek yang terdeteksi dalam satu bidang pengamatan Hubble."
+                ],
+                ".content-card:nth-child(1) small": ["Stars", "Bintang"],
+                ".content-card:nth-child(2) small": ["Planets", "Planet"],
+                ".content-card:nth-child(3) small": ["in one Hubble field", "dalam satu bidang Hubble"],
+                ".content-card:nth-child(4) small": ["Neutron Stars", "Bintang Neutron"],
+                ".content-card:nth-child(5) small": ["Black Holes", "Lubang Hitam"],
+                ".pill:nth-child(1)": ["Scutum–Centaurus Arm", "Lengan Scutum–Centaurus"],
+                ".pill:nth-child(2)": ["Carina–Sagittarius Arm", "Lengan Carina–Sagittarius"],
+                ".pill:nth-child(3)": ["Norma Arm", "Lengan Norma"],
+                ".pill:nth-child(4)": ["Orion Spur", "Lengan Orion"],
+                ".pill:nth-child(5)": ["Our Solar System", "Tata Surya Kita"],
+                ".pill:nth-child(6)": ["Perseus Arm", "Lengan Perseus"],
+                ".arms-description": [
+                    "Like early explorers mapping the continents of our globe, astronomers are busy charting the spiral structure of our galaxy. Using infrared images from NASA's Spitzer Space Telescope, scientists discovered that the Milky Way's elegant spiral structure is dominated by just two major arms—Scutum–Centaurus and Perseus—wrapping off the ends of a central bar of stars. Previously, our galaxy was thought to possess four major arms. The two now-demoted minor arms (Norma and Sagittarius) are less distinct and located between the major arms. The major arms consist of the highest densities of both young and old stars, while the minor arms are primarily filled with gas and pockets of star-forming activity. Our Sun lies near a small, partial arm called the Orion Arm, or Orion Spur, located between the Sagittarius and Perseus arms.",
+                    "Seperti para penjelajah awal yang memetakan benua-benua di Bumi, para astronom terus memetakan struktur spiral galaksi kita. Dengan menggunakan gambar inframerah dari Teleskop Antariksa Spitzer milik NASA, para ilmuwan menemukan bahwa struktur spiral elegan Bima Sakti didominasi oleh dua lengan utama—Scutum–Centaurus dan Perseus—yang membentang dari ujung batang pusat bintang. Sebelumnya, galaksi kita diperkirakan memiliki empat lengan utama. Dua lengan minor yang kini tidak lagi dianggap utama (Norma dan Sagittarius) lebih samar dan berada di antara lengan-lengan utama. Lengan utama memiliki kepadatan bintang muda dan tua tertinggi, sedangkan lengan minor terutama dipenuhi gas dan wilayah pembentukan bintang. Matahari kita berada di dekat lengan kecil parsial bernama Lengan Orion, atau Orion Spur, di antara lengan Sagittarius dan Perseus."
+                ],
+                ".timeline-eyebrow": ["Scale and structure", "Skala dan struktur"],
+                ".timeline-title": ["Our place in the cosmic scale", "Dari Bumi hingga alam semesta"],
+                ".milestone:nth-child(1) strong": ["Earth", "Bumi"],
+                ".milestone:nth-child(1) span": ["diameter: 12,742 km", "diameter: 12.742 km"],
+                ".milestone:nth-child(2) strong": ["Solar System", "Tata Surya"],
+                ".milestone:nth-child(2) span": ["diameter: ~240 AU", "diameter: ~240 AU"],
+                ".milestone:nth-child(3) strong": ["Milky Way", "Bima Sakti"],
+                ".milestone:nth-child(3) span": ["diameter: ~100,000 light-years", "diameter: ~100.000 tahun cahaya"],
+                ".milestone:nth-child(4) strong": ["Local Group", "Grup Lokal"],
+                ".milestone:nth-child(4) span": ["diameter: ~10 million light-years", "diameter: ~10 juta tahun cahaya"],
+                ".milestone:nth-child(5) strong": ["Laniakea Supercluster", "Supergugus Laniakea"],
+                ".milestone:nth-child(5) span": ["diameter: ~520 million light-years", "diameter: ~520 juta tahun cahaya"],
+                ".milestone:nth-child(6) strong": ["Observable Universe", "Alam Semesta Teramati"],
+                ".milestone:nth-child(6) span": ["diameter: ~93 billion light-years", "diameter: ~93 miliar tahun cahaya"],
+                ".timeline-caption": [
+                    "Approximate physical extent at each scale. For the Solar System, the boundary is the heliosphere—the bubble shaped by the Sun’s wind.",
+                    "Perkiraan ukuran fisik pada setiap skala. Untuk Tata Surya, batasnya adalah heliosfer—gelembung yang dibentuk oleh angin Matahari."
+                ],
+                ".sights-eyebrow": ["Regions of interest", "Rencana perjalanan lokal"],
+                ".sights-title": ["Five features of the Milky Way", "Tempat-Tempat Terbaik untuk Dikunjungi"],
+                ".sights-kicker": [
+                    "From the central black hole to the outer halo, each region reveals a different part of how our galaxy works.",
+                    "Jika ingin menjelajahi galaksi kita yang indah, jangan lewatkan tempat-tempat menakjubkan ini."
+                ],
+                ".sight:nth-child(1) h3": ["<b>1</b>Galactic center and bulge", "<b>1</b>Pusat dan tonjolan galaksi"],
+                ".sight:nth-child(2) h3": ["<b>2</b>Central supermassive black hole", "<b>2</b>Lubang hitam supermasif pusat"],
+                ".sight:nth-child(3) h3": ["<b>3</b>Spiral arms", "<b>3</b>Lengan spiral"],
+                ".sight:nth-child(4) h3": ["<b>4</b>Star-forming nebulae", "<b>4</b>Nebula pembentuk bintang"],
+                ".sight:nth-child(5) h3": ["<b>5</b>Halo and globular clusters", "<b>5</b>Halo dan gugus bola"],
+                ".sight:nth-child(1) p": [
+                    "The central bulge is a dense, roughly spherical region of older stars surrounding the Milky Way’s nucleus. Its stars move through a crowded environment unlike the quieter outer disk.",
+                    "Tonjolan pusat adalah wilayah padat yang kira-kira berbentuk bola, terdiri dari bintang-bintang tua yang mengelilingi inti Bima Sakti. Bintang-bintangnya bergerak dalam lingkungan yang jauh lebih ramai daripada cakram luar yang lebih tenang."
+                ],
+                ".sight:nth-child(2) p": [
+                    "Sagittarius A* sits at the exact center of the galaxy. It has a mass of about four million Suns. It is dark itself, but its gravity controls the orbits of nearby stars and gas.",
+                    "Sagittarius A* berada tepat di pusat galaksi. Massanya sekitar empat juta kali massa Matahari. Lubang hitam ini sendiri gelap, tetapi gravitasinya mengendalikan orbit bintang dan gas di sekitarnya."
+                ],
+                ".sight:nth-child(3) p": [
+                    "Spiral arms are dense regions moving through the disk, not rigid structures. Their gravity compresses gas and helps trigger new generations of stars. The Sun sits in the smaller Orion Spur between major arms.",
+                    "Lengan spiral adalah wilayah padat yang bergerak melalui cakram, bukan struktur yang kaku. Gravitasinya memampatkan gas dan membantu memicu generasi bintang baru. Matahari berada di Orion Spur yang lebih kecil, di antara lengan-lengan utama."
+                ],
+                ".sight:nth-child(4) p": [
+                    "Cold clouds of gas and dust collapse into stars inside nebulae. Radiation and stellar winds from young stars sculpt the clouds, while supernovae return enriched material to the surrounding space.",
+                    "Awan dingin gas dan debu runtuh membentuk bintang di dalam nebula. Radiasi dan angin bintang dari bintang-bintang muda membentuk awan tersebut, sementara supernova mengembalikan materi kaya unsur ke ruang di sekitarnya."
+                ],
+                ".sight:nth-child(5) p": [
+                    "A faint halo surrounds the bright disk. It contains ancient stars and tightly packed globular clusters orbiting far above and below the galaxy’s main plane. These populations preserve clues about the Milky Way’s early history.",
+                    "Halo yang samar mengelilingi cakram terang Bima Sakti. Di dalamnya terdapat bintang-bintang tua dan gugus bola yang sangat rapat, mengorbit jauh di atas dan di bawah bidang utama galaksi. Populasi ini menyimpan petunjuk tentang sejarah awal Bima Sakti."
+                ]
+            };
+            const languageButtons = document.querySelectorAll("[data-lang]");
+            const setLanguage = (language) => {
+                document.documentElement.lang = language;
+                for (const [selector, values] of Object.entries(copy)) {
+                    const element = document.querySelector(selector);
+                    if (element) element.innerHTML = values[language === "id" ? 1 : 0];
+                }
+                document.querySelector(".contents-image").alt = language === "id" ? "Galaksi Bima Sakti" : "Milky Way galaxy";
+                languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === language));
+            };
+            languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
+            setLanguage("en");
+        </script>
     </body>
 </html>
