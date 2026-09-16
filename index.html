@@ -338,14 +338,6 @@
                 text-decoration-color: #65738e;
                 text-underline-offset: 3px;
             }
-            .sources a::after {
-                content: " · " attr(href);
-                display: block;
-                color: #79859a;
-                font-size: 0.65rem;
-                line-height: 1.35;
-                overflow-wrap: anywhere;
-            }
             .sources a:hover,
             .sources a:focus-visible {
                 color: var(--ink);
@@ -402,6 +394,15 @@
                 margin: 18px 0 0;
             }
             .print-link a {
+                color: var(--ink);
+                text-underline-offset: 3px;
+            }
+            .made-by {
+                margin: 10px 0 0;
+                color: var(--muted);
+                font-size: 0.75rem;
+            }
+            .made-by a {
                 color: var(--ink);
                 text-underline-offset: 3px;
             }
@@ -514,7 +515,6 @@
                     ><span class="pill">Carina–Sagittarius Arm</span
                     ><span class="pill">Norma Arm</span
                     ><span class="pill">Orion Spur</span
-                    ><span class="pill">Our Solar System</span
                     ><span class="pill">Perseus Arm</span>
                 </div>
                 <p class="arms-description">
@@ -681,15 +681,16 @@
                     <li><a href="https://science.nasa.gov/mission/hubble/science/science-highlights/monster-black-holes-are-everywhere/" target="_blank" rel="noreferrer">NASA / Hubble — black-hole estimate</a></li>
                     <li><a href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noreferrer">NASA glossary — Sagittarius A* mass</a></li>
                 </ul>
-                <p class="print-link"><a href="#print" id="print-page">Export this page as PDF</a></p>
+                <p class="print-link"><a href="assets/milky-way-a3.pdf" download="milky-way-a3.pdf">Download the A3 PDF</a></p>
+                <p class="made-by">Made by <a href="https://deutan.dev/" target="_blank" rel="noreferrer">deutan.dev</a></p>
             </div>
         </footer>
         <script>
             const copy = {
-                "#hero-title": ["Inside the <em>Milky Way</em>", "<em>Bima Sakti</em>"],
+                "#hero-title": ["Inside the <em>Milky Way</em>", "Galaksi <em>Bima Sakti</em>"],
                 ".lede": [
                     "The Milky Way is a barred spiral galaxy: a broad disk of stars, gas, and dust surrounding a dense central bulge. It spans roughly 100,000 light-years and contains hundreds of billions of stars, including our Sun.",
-                    "Kenali galaksi tempat tinggal kita, Bima Sakti! Namanya menggambarkan pita cahaya samar yang terlihat di langit malam saat kita memandang dari Bumi. Jika diamati lebih dekat, Bima Sakti adalah galaksi spiral berbatang dengan diameter 150.000 hingga 200.000 tahun cahaya, yang berisi 100 hingga 400 miliar bintang dengan berbagai jenis."
+                    "Kenali galaksi tempat tinggal kita, Bima Sakti! Terlihat sebagai bentang cahaya samar yang terlihat di langit malam saat kita memandang dari Bumi. Bima Sakti adalah galaksi spiral berbatang dengan diameter 150.000 hingga 200.000 tahun cahaya, yang berisi 100 hingga 400 miliar bintang dengan berbagai jenis."
                 ],
                 ".contents-eyebrow": ["Key properties", "Sifat utama"],
                 ".contents-title": ["The Milky Way<br />at a glance", "Bima Sakti<br />secara singkat"],
@@ -711,8 +712,7 @@
                 ".pill:nth-child(2)": ["Carina–Sagittarius Arm", "Lengan Carina–Sagittarius"],
                 ".pill:nth-child(3)": ["Norma Arm", "Lengan Norma"],
                 ".pill:nth-child(4)": ["Orion Spur", "Lengan Orion"],
-                ".pill:nth-child(5)": ["Our Solar System", "Tata Surya Kita"],
-                ".pill:nth-child(6)": ["Perseus Arm", "Lengan Perseus"],
+                ".pill:nth-child(5)": ["Perseus Arm", "Lengan Perseus"],
                 ".arms-description": [
                     "Like early explorers mapping the continents of our globe, astronomers are busy charting the spiral structure of our galaxy. Using infrared images from NASA's Spitzer Space Telescope, scientists discovered that the Milky Way's elegant spiral structure is dominated by just two major arms—Scutum–Centaurus and Perseus—wrapping off the ends of a central bar of stars. Previously, our galaxy was thought to possess four major arms. The two now-demoted minor arms (Norma and Sagittarius) are less distinct and located between the major arms. The major arms consist of the highest densities of both young and old stars, while the minor arms are primarily filled with gas and pockets of star-forming activity. Our Sun lies near a small, partial arm called the Orion Arm, or Orion Spur, located between the Sagittarius and Perseus arms.",
                     "Seperti para penjelajah awal yang memetakan benua-benua di Bumi, para astronom terus memetakan struktur spiral galaksi kita. Dengan menggunakan gambar inframerah dari Teleskop Antariksa Spitzer milik NASA, para ilmuwan menemukan bahwa struktur spiral elegan Bima Sakti didominasi oleh dua lengan utama—Scutum–Centaurus dan Perseus—yang membentang dari ujung batang pusat bintang. Sebelumnya, galaksi kita diperkirakan memiliki empat lengan utama. Dua lengan minor yang kini tidak lagi dianggap utama (Norma dan Sagittarius) lebih samar dan berada di antara lengan-lengan utama. Lengan utama memiliki kepadatan bintang muda dan tua tertinggi, sedangkan lengan minor terutama dipenuhi gas dan wilayah pembentukan bintang. Matahari kita berada di dekat lengan kecil parsial bernama Lengan Orion, atau Orion Spur, di antara lengan Sagittarius dan Perseus."
@@ -736,7 +736,7 @@
                     "Perkiraan ukuran fisik pada setiap skala. Untuk Tata Surya, batasnya adalah heliosfer—gelembung yang dibentuk oleh angin Matahari."
                 ],
                 ".sights-eyebrow": ["Regions of interest", "Anatomi Bima Sakti"],
-                ".sights-title": ["Five features of the Milky Way", "Lima struktur utama Bima Sakti"],
+                ".sights-title": ["Features of the Milky Way", "Struktur utama Bima Sakti"],
                 ".sights-kicker": [
                     "From the central black hole to the outer halo, each region reveals a different part of how our galaxy works.",
                     "Dari lubang hitam pusat hingga halo terluar, setiap bagian memperlihatkan cara galaksi kita tersusun dan berevolusi."
@@ -779,7 +779,6 @@
                 languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === language));
             };
             languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
-            document.querySelector("#print-page").addEventListener("click", (event) => { event.preventDefault(); window.print(); });
             setLanguage("id");
         </script>
     </body>
