@@ -63,10 +63,6 @@
             }
             .hero {
                 padding: 96px 0 68px;
-                display: grid;
-                grid-template-columns: 1.05fr 0.95fr;
-                gap: 54px;
-                align-items: center;
             }
             .eyebrow {
                 color: var(--pink);
@@ -81,7 +77,6 @@
                 line-height: 0.9;
                 letter-spacing: -0.08em;
                 margin: 18px 0 28px;
-                max-width: 600px;
             }
             .hero h1 em {
                 font-style: normal;
@@ -92,82 +87,13 @@
                 color: #d4d1dc;
                 max-width: 540px;
             }
-            .hero-art {
-                min-height: 390px;
-                position: relative;
+            .hero-image {
+                display: block;
+                width: 100%;
+                height: auto;
+                margin: 34px 0 30px;
                 border: 1px solid #303252;
-                border-radius: 50%;
-                background: radial-gradient(
-                    circle at center,
-                    #ef9e3550 0 7%,
-                    #326cd755 8% 10%,
-                    transparent 11% 22%,
-                    #2169c355 23% 25%,
-                    transparent 26% 38%,
-                    #40b9df44 39% 42%,
-                    transparent 43% 55%,
-                    #5f4dce55 56% 58%,
-                    transparent 59%
-                );
-                box-shadow:
-                    0 0 100px #3153bb33,
-                    inset 0 0 70px #0f173e;
-                overflow: hidden;
-            }
-            .hero-art:before,
-            .hero-art:after {
-                content: "";
-                position: absolute;
-                border-radius: 50%;
-                inset: 17%;
-                border: 14px solid #1a93e855;
-                transform: rotate(-20deg);
-            }
-            .hero-art:after {
-                inset: 30%;
-                border-color: #efab3c99;
-                border-width: 10px;
-                transform: rotate(35deg);
-            }
-            .sun {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                width: 82px;
-                height: 82px;
-                transform: translate(-50%, -50%);
-                border-radius: 50%;
-                background: #ffbd50;
-                box-shadow:
-                    0 0 35px #ff9d38,
-                    0 0 80px #f07a2c88;
-            }
-            .orbit-dot {
-                position: absolute;
-                width: 9px;
-                height: 9px;
-                border-radius: 50%;
-                background: #fff;
-                box-shadow: 0 0 12px #9ceaff;
-            }
-            .d1 {
-                left: 20%;
-                top: 33%;
-            }
-            .d2 {
-                right: 19%;
-                top: 27%;
-                background: var(--pink);
-            }
-            .d3 {
-                left: 29%;
-                bottom: 22%;
-                background: var(--cyan);
-            }
-            .d4 {
-                right: 32%;
-                bottom: 17%;
-                background: var(--gold);
+                border-radius: 18px;
             }
             .section {
                 padding: 70px 0;
@@ -348,9 +274,6 @@
                     grid-template-columns: 1fr;
                     padding-top: 65px;
                 }
-                .hero-art {
-                    min-height: 300px;
-                }
                 .contents,
                 .sights {
                     grid-template-columns: repeat(2, 1fr);
@@ -390,8 +313,12 @@
         <main>
             <section class="hero container">
                 <div>
-                    <div class="eyebrow">A neighborhood study · 01</div>
-                    <h1>The<br /><em>Milky Way</em></h1>
+                    <h1>The <em>Milky Way</em></h1>
+                    <img
+                        class="hero-image"
+                        src="https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/ssc2008-10b1.jpg?w=5600&h=5600&fit=clip&crop=faces%2Cfocalpoint"
+                        alt="The Sun"
+                    />
                     <p class="lede">
                         Meet our home galaxy, the Milky Way! Its name describes
                         the hazy band of light we can see in the night sky
@@ -400,14 +327,6 @@
                         150,000 to 200,000 light-years, containing 100 to 400
                         billion stars of all different kinds.
                     </p>
-                </div>
-                <div
-                    class="hero-art"
-                    aria-label="Abstract illustration of the Milky Way"
-                >
-                    <i class="sun"></i><i class="orbit-dot d1"></i
-                    ><i class="orbit-dot d2"></i><i class="orbit-dot d3"></i
-                    ><i class="orbit-dot d4"></i>
                 </div>
             </section>
             <section id="contents" class="section container">
@@ -581,8 +500,5 @@
                 </div>
             </section>
         </main>
-        <footer class="footer">
-            <div class="container">THE MILKY WAY · A GALACTIC FIELD GUIDE</div>
-        </footer>
     </body>
 </html>
